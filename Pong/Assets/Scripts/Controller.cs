@@ -4,48 +4,51 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class Controller: MonoBehaviour {
-	public GameObject ball;
+    public GameObject ball;
 
-	public GameObject player1;
-	public GameObject player2;
+    public GameObject player1;
+    public GameObject player2;
 
-	private RacketMov racketMov;
-	private GameManager gameManager;
+    public float maxSpeed;
 
-	private Dictionary<string, object>[] states;
+    private RacketMov racketMov;
+    private GameManager gameManager;
 
-	void Start() {
-		this.racketMov = new RacketMov(player1.GetComponent<Rigidbody2D>(),
-			player2.GetComponent<Rigidbody2D>(), 15);
+    private Dictionary<string, object>[] states;
 
-		var actions = new Dictionary<string, Action<int, object[]>>
-		{{ "move", this.racketMov.move }};
+    void Start() {
+        Time.timeScale = 5;
+        this.racketMov = new RacketMov(player1.GetComponent<Rigidbody2D>(),
+            player2.GetComponent<Rigidbody2D>(), this.maxSpeed);
 
-		this.gameManager = new GameManager(new string[]
-			{ "MyRobot.dll" }, actions);
+        var actions = new Dictionary<string, Action<int, object[]>>
+        {{ "move", this.racketMov.move }};
 
-		this.states = new Dictionary<string, object>[2];
-	}
+        this.gameManager = new GameManager(new string[]
+            { "F:\\PD\\TCC\\MyRobot.dll", "F:\\PD\\TCC\\MyRobot.dll" }, actions);
 
-	void Update() {
-		this.states[0] = new Dictionary<string, object>();
-		this.states[1] = new Dictionary<string, object>();
+        this.states = new Dictionary<string, object>[2];
+    }
 
-		float ballX = this.ball.transform.position.x,
-		ballY = this.ball.transform.position.y;
+    void Update() {
+        this.states[0] = new Dictionary<string, object>();
+        this.states[1] = new Dictionary<string, object>();
 
-		float plyrX = this.player1.transform.position.x,
-		plyrY = this.player1.transform.position.y;
+        float ballX = this.ball.transform.position.x,
+        ballY = this.ball.transform.position.y;
 
-		this.states[0].Add("ball-pos", new float[] { ballX, ballY });
-		this.states[0].Add("player-pos", new float[] { plyrX, plyrY });
+        float plyrX = this.player1.transform.position.x,
+        plyrY = this.player1.transform.position.y;
 
-		plyrX = this.player2.transform.position.x;
-		plyrY = this.player2.transform.position.y;
+        this.states[0].Add("ball-pos", new float[] { ballX, ballY });
+        this.states[0].Add("player-pos", new float[] { plyrX, plyrY });
 
-		this.states[1].Add("ball-pos", new float[] { ballX, ballY });
-		this.states[1].Add("player-pos", new float[] { plyrX, plyrY });
+        plyrX = this.player2.transform.position.x;
+        plyrY = this.player2.transform.position.y;
 
-		gameManager.update(this.states);
-	}
+        this.states[1].Add("ball-pos", new float[] { ballX, ballY });
+        this.states[1].Add("player-pos", new float[] { plyrX, plyrY });
+
+        gameManager.update(this.states);
+    }
 }
