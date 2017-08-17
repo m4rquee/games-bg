@@ -7,7 +7,7 @@ public class RandSpeed: MonoBehaviour {
 
     private Rigidbody2D rb2d;
 
-    private int[] score = new int[] { 0, 0 };
+    private int [] score = new int [] { 0, 0 };
 
     void Start() {
         this.rb2d = GetComponent<Rigidbody2D>();
@@ -33,11 +33,11 @@ public class RandSpeed: MonoBehaviour {
 
             case "wall":
             if (collision.gameObject.name == "walll")
-                this.score[0]++;
+                this.score [0]++;
             else if (collision.gameObject.name == "wallr")
-                this.score[1]++;
+                this.score [1]++;
 
-            Debug.Log("Score: " + this.score[0] + " " + this.score[1]);
+            Debug.Log("Score: " + this.score [0] + " " + this.score [1]);
 
             this.transform.position = Vector3.zero;
             this.rb2d.velocity = (Random.value > 0.5 ? Vector2.right : Vector2.left) * speed;
