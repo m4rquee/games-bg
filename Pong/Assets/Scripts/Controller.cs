@@ -25,7 +25,7 @@ public class Controller: MonoBehaviour {
         {{ "move", this.racketMov.move }};
 
         this.gameManager = new GameManager(new string[]
-            { "F:\\PD\\TCC\\MyRobot.dll", "F:\\PD\\TCC\\MyRobot.dll" }, actions);
+            { "D:\\PD\\TCC\\MyRobot.dll", "D:\\PD\\TCC\\MyRobot.dll" }, actions);
 
         this.states = new Dictionary<string, object>[2];
     }

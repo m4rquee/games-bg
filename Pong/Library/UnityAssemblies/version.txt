@@ -9,3 +9,4 @@ C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-
 C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll
 C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll
 C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll
+C:/Program Files/Unity/Editor/Data\Managed/Mono.Cecil.dll
