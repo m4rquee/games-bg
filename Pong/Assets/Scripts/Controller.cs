@@ -2,6 +2,7 @@
 using BitsGalaxy;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Controller: MonoBehaviour {
 	public GameObject ball;
@@ -17,37 +18,40 @@ public class Controller: MonoBehaviour {
 	private Dictionary<string, object>[] states;
 
 	void Start() {
-		Time.timeScale = 3;
 		this.racketMov = new RacketMov(player1.GetComponent<Rigidbody2D>(),
 			player2.GetComponent<Rigidbody2D>(), this.maxSpeed);
 
 		var actions = new Dictionary<string, Action<int, List<object>>>
-		{{ "move", this.racketMov.move }};
+		{{ "move", this.racketMov.Move }};
 
-		this.gameManager = new GameManager(new string[]
-			{ "D:\\PD\\TCC\\MyRobot.dll", "D:\\PD\\TCC\\MyRobot.dll" }, actions, 2);
+		try {
+			this.gameManager = new GameManager(new string[]
+		   { "C:\\Users\\u15182\\Desktop\\Pong\\robot1.dll",
+		   "C:\\Users\\u15182\\Desktop\\Pong\\robot2.dll" }, actions, 2);
+		} catch (Exception e) {
+			Debug.Log(e.StackTrace);
+		}
 
 		this.states = new Dictionary<string, object>[2];
+		this.states[0] = new Dictionary<string, object>();
+		this.states[1] = new Dictionary<string, object>();
 	}
 
 	void Update() {
-		this.states[0] = new Dictionary<string, object>();
-		this.states[1] = new Dictionary<string, object>();
-
-		float ballX = this.ball.transform.position.x,
+		double ballX = this.ball.transform.position.x,
 		ballY = this.ball.transform.position.y;
 
-		float plyrX = this.player1.transform.position.x,
+		double plyrX = this.player1.transform.position.x,
 		plyrY = this.player1.transform.position.y;
 
-		this.states[0].Add("ball-pos", new float[] { ballX, ballY });
-		this.states[0].Add("player-pos", new float[] { plyrX, plyrY });
+		this.states[0]["ball-pos"] = new ArrayList { ballX, ballY };
+		this.states[0]["player-pos"] = new ArrayList { plyrX, plyrY };
 
 		plyrX = this.player2.transform.position.x;
 		plyrY = this.player2.transform.position.y;
 
-		this.states[1].Add("ball-pos", new float[] { ballX, ballY });
-		this.states[1].Add("player-pos", new float[] { plyrX, plyrY });
+		this.states[1]["ball-pos"] = new ArrayList { ballX, ballY };
+		this.states[1]["player-pos"] = new ArrayList { plyrX, plyrY };
 
 		gameManager.Update(this.states);
 	}

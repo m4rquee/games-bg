@@ -16,7 +16,7 @@ public class RacketMov {
 		this.maxSpeed = maxSpeed;
 	}
 
-	public void move(int player, List<object> vel) {
-		this.rb2d[player].velocity = new Vector2(0, (float) vel[0] * maxSpeed);
+	public void Move(int player, List<object> vel) {
+		this.rb2d[player].velocity = new Vector2(0, (float) (double) vel[0] * maxSpeed);
 	}
 }
