@@ -42,10 +42,10 @@ public class RandSpeed: MonoBehaviour {
 				else if (collision.gameObject.name == "wallr")
 					this.score[1]++;
 
-				this.scoreText.text = String.Format("{0:000} | {1:000}", this.score[0], this.score[1]);
-
 				this.transform.position = Vector3.zero;
 				this.rb2d.velocity = (UnityEngine.Random.value > 0.5 ? Vector2.right : Vector2.left) * speed;
+
+				this.scoreText.text = String.Format("{0:000} - {1:000}", this.score[0], this.score[1]);
 				break;
 		}
 	}
