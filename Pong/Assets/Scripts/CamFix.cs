@@ -2,7 +2,7 @@
 
 public class CamFix: MonoBehaviour {
 
-	public float step = 0.1f;
+	public float step = 1f;
 	public float timeScale = 1;
 
 	private Camera cam;

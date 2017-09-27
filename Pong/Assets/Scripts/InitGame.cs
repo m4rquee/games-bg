@@ -7,7 +7,7 @@ public class InitGame: MonoBehaviour {
 	public GameObject btns;
 
 	public void Init() {
-		if (this.paths[0] != null && this.paths[1] != null) {
+		if (!string.IsNullOrEmpty(this.paths[0]) && !string.IsNullOrEmpty(this.paths[1])) {
 			Controller ctrl = this.gamesObjs.GetComponentInChildren<Controller>();
 			ctrl.Init(this.paths[0], this.paths[1]);
 
