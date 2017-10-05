@@ -1,3 +1,10 @@
+/RobAICode/[Ll]ibrary/
+/RobAICode/[Tt]emp/
+/RobAICode/[Oo]bj/
+/RobAICode/[Bb]uild/
+/RobAICode/[Bb]uilds/
+/RobAICode/Assets/AssetStoreTools*
+
 /Pong2/[Ll]ibrary/
 /Pong2/[Tt]emp/
 /Pong2/[Oo]bj/
@@ -11,7 +18,6 @@
 /Pong/[Bb]uild/
 /Pong/[Bb]uilds/
 /Pong/Assets/AssetStoreTools*
-
 
 # Visual Studio 2015 cache directory
 /Pong2/.vs/
