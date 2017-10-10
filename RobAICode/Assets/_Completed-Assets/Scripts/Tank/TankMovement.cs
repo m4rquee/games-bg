@@ -13,10 +13,30 @@ namespace Complete {
 		private string m_MovementAxisName;          // The name of the input axis for moving forward and back.
 		private string m_TurnAxisName;              // The name of the input axis for turning.
 		private Rigidbody m_Rigidbody;              // Reference used to move the tank.
-		private float m_MovementInputValue;         // The current value of the movement input.
+		private float m_MovementInputValue;        // The current value of the movement input.
 		private float m_TurnInputValue;             // The current value of the turn input.
 		private float m_OriginalPitch;              // The pitch of the audio source at the start of the scene.
 		private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
+
+		public float M_MovementInputValue {
+			get {
+				return this.m_MovementInputValue;
+			}
+
+			set {
+				this.m_MovementInputValue = value;
+			}
+		}
+
+		public float M_TurnInputValue {
+			get {
+				return this.m_TurnInputValue;
+			}
+
+			set {
+				this.m_TurnInputValue = value;
+			}
+		}
 
 		private void Awake() {
 			m_Rigidbody = GetComponent<Rigidbody>();
@@ -60,9 +80,6 @@ namespace Complete {
 
 		private void Update() {
 			// Store the value of both input axes.
-			m_MovementInputValue = Input.GetAxis(m_MovementAxisName);
-			m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
-
 			EngineAudio();
 		}
 
@@ -87,13 +104,11 @@ namespace Complete {
 			}
 		}
 
-
 		private void FixedUpdate() {
 			// Adjust the rigidbodies position and orientation in FixedUpdate.
 			Move();
 			Turn();
 		}
-
 
 		private void Move() {
 			// Create a vector in the direction the tank is facing with a magnitude based on the input, speed and the time between frames.
@@ -102,7 +117,6 @@ namespace Complete {
 			// Apply this movement to the rigidbody's position.
 			m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
 		}
-
 
 		private void Turn() {
 			// Determine the number of degrees to be turned based on the input, speed and time between frames.
