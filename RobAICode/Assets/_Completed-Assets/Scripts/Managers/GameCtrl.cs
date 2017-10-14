@@ -14,9 +14,13 @@ public class GameCtrl: MonoBehaviour {
 	private Dictionary<string, object>[] states;
 	private Dictionary<string, Action<int, float>> tankActions;
 
+	private float min;
+	private float max;
+
 	void Start() {
 		this.tankActions = new Dictionary<string, Action<int, float>>()
-		{{ "move", SetMovementInputValue}, { "turn", SetTurnInputValue}, { "look_to_enemy", LookToEnemy} };
+		{{ "move", SetMovementInputValue}, { "turn", SetTurnInputValue},
+			{ "look_to_enemy", LookToEnemy}, {"fire", Fire } };
 
 		this.tanksObjs = null;
 
@@ -47,6 +51,9 @@ public class GameCtrl: MonoBehaviour {
 
 			this.tanksShoot[0] = this.tanksObjs[0].GetComponent<Complete.TankShooting>();
 			this.tanksShoot[1] = this.tanksObjs[1].GetComponent<Complete.TankShooting>();
+
+			this.min = Complete.TankShooting.m_MinLaunchForce;
+			this.max = Complete.TankShooting.m_MaxLaunchForce;
 		}
 
 		double p1X = this.tanksObjs[0].transform.position.x,
@@ -97,5 +104,16 @@ public class GameCtrl: MonoBehaviour {
 	private void LookToEnemy(int plyr, float v) {
 		int enemy = plyr == 0 ? 1 : 0;
 		this.tanksMov[plyr].transform.LookAt(this.tanksMov[enemy].transform);
+	}
+
+	private void Fire(int plyr, float f) {
+		f /= 100;
+		if (f > 1)
+			f = 1;
+
+		f *= (this.max - this.min);
+		f += this.min;
+
+		this.tanksShoot[plyr].Fire(f);
 	}
 }
