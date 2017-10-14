@@ -10,12 +10,13 @@ public class GameCtrl: MonoBehaviour {
 
 	private GameObject[] tanksObjs;
 	private Complete.TankMovement[] tanksMov;
+	private Complete.TankShooting[] tanksShoot;
 	private Dictionary<string, object>[] states;
 	private Dictionary<string, Action<int, float>> tankActions;
 
 	void Start() {
 		this.tankActions = new Dictionary<string, Action<int, float>>()
-		{{ "move", SetMovementInputValue}, { "turn", SetTurnInputValue}};
+		{{ "move", SetMovementInputValue}, { "turn", SetTurnInputValue}, { "look_to_enemy", LookToEnemy} };
 
 		this.tanksObjs = null;
 
@@ -27,6 +28,7 @@ public class GameCtrl: MonoBehaviour {
 		this.states[1] = new Dictionary<string, object>();
 
 		this.tanksMov = new Complete.TankMovement[2];
+		this.tanksShoot = new Complete.TankShooting[2];
 
 		try {
 			this.gameManager = new GameManager(new string[] { "C:\\Users\\lucas\\Desktop\\Robots\\circle.dll",
@@ -42,6 +44,9 @@ public class GameCtrl: MonoBehaviour {
 
 			this.tanksMov[0] = this.tanksObjs[0].GetComponent<Complete.TankMovement>();
 			this.tanksMov[1] = this.tanksObjs[1].GetComponent<Complete.TankMovement>();
+
+			this.tanksShoot[0] = this.tanksObjs[0].GetComponent<Complete.TankShooting>();
+			this.tanksShoot[1] = this.tanksObjs[1].GetComponent<Complete.TankShooting>();
 		}
 
 		double p1X = this.tanksObjs[0].transform.position.x,
@@ -80,10 +85,6 @@ public class GameCtrl: MonoBehaviour {
 	}
 
 	private void SetTurnInputValue(int plyr, float v) {
-		if (plyr == 1) {
-			int a = 1;
-		}
-
 		v /= 100;
 		if (v > 1)
 			v = 1;
@@ -91,5 +92,10 @@ public class GameCtrl: MonoBehaviour {
 			v = -1;
 
 		this.tanksMov[plyr].M_TurnInputValue = v;
+	}
+
+	private void LookToEnemy(int plyr, float v) {
+		int enemy = plyr == 0 ? 1 : 0;
+		this.tanksMov[plyr].transform.LookAt(this.tanksMov[enemy].transform);
 	}
 }
