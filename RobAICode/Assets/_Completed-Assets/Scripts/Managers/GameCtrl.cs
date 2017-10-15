@@ -53,6 +53,12 @@ public class GameCtrl: MonoBehaviour {
 			this.tanksName[1] = this.tanksObjs[1].transform.GetChild(0).GetChild(0).GetComponent<Text>();
 
 			var names = this.gameManager.PlyrsName;
+
+			if (names[0] == names[1]) {
+				names[0] += " 1";
+				names[1] += " 2";
+			}
+
 			this.tanksName[0].text = names[0];
 			this.tanksName[1].text = names[1];
 
