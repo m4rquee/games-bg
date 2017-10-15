@@ -1,6 +1,7 @@
 ﻿using System;
 using BitsGalaxy;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -36,7 +37,7 @@ public class GameCtrl: MonoBehaviour {
 
 		try {
 			this.gameManager = new GameManager(new string[] { "C:\\Users\\lucas\\Desktop\\Robots\\circle.dll",
-				"C:\\Users\\lucas\\Desktop\\Robots\\MyRobot.dll" }, actions, 2);
+				"C:\\Users\\lucas\\Desktop\\Robots\\find.dll" }, actions, 2);
 		} catch (Exception e) {
 			Debug.Log(e.StackTrace);
 		}
@@ -54,6 +55,9 @@ public class GameCtrl: MonoBehaviour {
 
 			this.min = Complete.TankShooting.m_MinLaunchForce;
 			this.max = Complete.TankShooting.m_MaxLaunchForce;
+
+			this.tanksObjs[0].transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Circle";
+			this.tanksObjs[1].transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Find";
 		}
 
 		double p1X = this.tanksObjs[0].transform.position.x,
@@ -107,13 +111,14 @@ public class GameCtrl: MonoBehaviour {
 	}
 
 	private void Fire(int plyr, float f) {
-		f /= 100;
-		if (f > 1)
-			f = 1;
+		f /= 1000;
+		if (f > 0.1)
+			f = 0.1f;
 
 		f *= (this.max - this.min);
 		f += this.min;
 
-		this.tanksShoot[plyr].Fire(f);
+		if (!this.tanksShoot[plyr].shooting)
+			StartCoroutine(this.tanksShoot[plyr].Fire(f));
 	}
 }
