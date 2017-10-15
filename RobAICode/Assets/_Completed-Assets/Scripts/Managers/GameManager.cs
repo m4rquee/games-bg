@@ -20,7 +20,6 @@ namespace Complete {
 		private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
 		private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
-
 		private void Start() {
 			// Create the delays so they only have to be made once.
 			m_StartWait = new WaitForSeconds(m_StartDelay);
@@ -33,7 +32,6 @@ namespace Complete {
 			StartCoroutine(GameLoop());
 		}
 
-
 		private void SpawnAllTanks() {
 			// For all the tanks...
 			for (int i = 0; i < m_Tanks.Length; i++) {
@@ -44,7 +42,6 @@ namespace Complete {
 				m_Tanks[i].Setup();
 			}
 		}
-
 
 		private void SetCameraTargets() {
 			// Create a collection of transforms the same size as the number of tanks.
@@ -59,7 +56,6 @@ namespace Complete {
 			// These are the targets the camera should follow.
 			m_CameraControl.m_Targets = targets;
 		}
-
 
 		// This is called from start and will run each phase of the game one after another.
 		private IEnumerator GameLoop() {
@@ -83,7 +79,6 @@ namespace Complete {
 			}
 		}
 
-
 		private IEnumerator RoundStarting() {
 			// As soon as the round starts reset the tanks and make sure they can't move.
 			ResetAllTanks();
@@ -100,7 +95,6 @@ namespace Complete {
 			yield return m_StartWait;
 		}
 
-
 		private IEnumerator RoundPlaying() {
 			// As soon as the round begins playing let the players control the tanks.
 			EnableTankControl();
@@ -109,12 +103,10 @@ namespace Complete {
 			m_MessageText.text = string.Empty;
 
 			// While there is not one tank left...
-			while (!OneTankLeft()) {
+			while (!OneTankLeft())
 				// ... return on the next frame.
 				yield return null;
-			}
 		}
-
 
 		private IEnumerator RoundEnding() {
 			// Stop tanks from moving.
@@ -141,52 +133,45 @@ namespace Complete {
 			yield return m_EndWait;
 		}
 
-
 		// This is used to check if there is one or fewer tanks remaining and thus the round should end.
 		private bool OneTankLeft() {
 			// Start the count of tanks left at zero.
 			int numTanksLeft = 0;
 
 			// Go through all the tanks...
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				// ... and if they are active, increment the counter.
 				if (m_Tanks[i].m_Instance.activeSelf)
 					numTanksLeft++;
-			}
 
 			// If there are one or fewer tanks remaining return true, otherwise return false.
 			return numTanksLeft <= 1;
 		}
 
-
 		// This function is to find out if there is a winner of the round.
 		// This function is called with the assumption that 1 or fewer tanks are currently active.
 		private TankManager GetRoundWinner() {
 			// Go through all the tanks...
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				// ... and if one of them is active, it is the winner so return it.
 				if (m_Tanks[i].m_Instance.activeSelf)
 					return m_Tanks[i];
-			}
 
 			// If none of the tanks are active it is a draw so return null.
 			return null;
 		}
 
-
 		// This function is to find out if there is a winner of the game.
 		private TankManager GetGameWinner() {
 			// Go through all the tanks...
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				// ... and if one of them has enough rounds to win the game, return it.
 				if (m_Tanks[i].m_Wins == m_NumRoundsToWin)
 					return m_Tanks[i];
-			}
 
 			// If no tanks have enough rounds to win, return null.
 			return null;
 		}
-
 
 		// Returns a string message to display at the end of each round.
 		private string EndMessage() {
@@ -201,9 +186,8 @@ namespace Complete {
 			message += "\n\n\n\n";
 
 			// Go through all the tanks and add each of their scores to the message.
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				message += m_Tanks[i].m_ColoredPlayerText + ": " + m_Tanks[i].m_Wins + " WINS\n";
-			}
 
 			// If there is a game winner, change the entire message to reflect that.
 			if (m_GameWinner != null)
@@ -212,26 +196,20 @@ namespace Complete {
 			return message;
 		}
 
-
 		// This function is used to turn all the tanks back on and reset their positions and properties.
 		private void ResetAllTanks() {
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				m_Tanks[i].Reset();
-			}
 		}
-
 
 		private void EnableTankControl() {
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				m_Tanks[i].EnableControl();
-			}
 		}
 
-
 		private void DisableTankControl() {
-			for (int i = 0; i < m_Tanks.Length; i++) {
+			for (int i = 0; i < m_Tanks.Length; i++)
 				m_Tanks[i].DisableControl();
-			}
 		}
 	}
 }

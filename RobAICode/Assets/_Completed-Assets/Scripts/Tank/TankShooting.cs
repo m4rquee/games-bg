@@ -12,10 +12,12 @@ namespace Complete {
 		public static float m_MaxLaunchForce = 30f; // The force given to the shell if the fire button is held for the max charge time.
 
 		public float waitTime = 1;
-
 		public bool shooting = false;
 
 		public IEnumerator Fire(float speed) {
+			if (!this.enabled)
+				yield break;
+
 			this.shooting = true;
 
 			yield return new WaitForSeconds(this.waitTime);

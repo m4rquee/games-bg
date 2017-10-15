@@ -9,17 +9,19 @@ public class GameCtrl: MonoBehaviour {
 
 	private GameManager gameManager;
 
-	private GameObject[] tanksObjs;
+	private Text[] tanksName;
 	private Complete.TankMovement[] tanksMov;
 	private Complete.TankShooting[] tanksShoot;
+
+	private GameObject[] tanksObjs;
 	private Dictionary<string, object>[] states;
-	private Dictionary<string, Action<int, float>> tankActions;
+	private Dictionary<string, Action<int, object>> tankActions;
 
 	private float min;
 	private float max;
 
 	void Start() {
-		this.tankActions = new Dictionary<string, Action<int, float>>()
+		this.tankActions = new Dictionary<string, Action<int, object>>()
 		{{ "move", SetMovementInputValue}, { "turn", SetTurnInputValue},
 			{ "look_to_enemy", LookToEnemy}, {"fire", Fire } };
 
@@ -32,12 +34,12 @@ public class GameCtrl: MonoBehaviour {
 		this.states[0] = new Dictionary<string, object>();
 		this.states[1] = new Dictionary<string, object>();
 
+		this.tanksName = new Text[2];
 		this.tanksMov = new Complete.TankMovement[2];
 		this.tanksShoot = new Complete.TankShooting[2];
 
 		try {
-			this.gameManager = new GameManager(new string[] { "C:\\Users\\lucas\\Desktop\\Robots\\circle.dll",
-				"C:\\Users\\lucas\\Desktop\\Robots\\find.dll" }, actions, 2);
+			this.gameManager = new GameManager(new string[] { "D:\\PD\\TCC\\Tanks.dll" }, actions, 2);
 		} catch (Exception e) {
 			Debug.Log(e.StackTrace);
 		}
@@ -47,6 +49,13 @@ public class GameCtrl: MonoBehaviour {
 		if (this.tanksObjs == null) {
 			this.tanksObjs = GameObject.FindGameObjectsWithTag("Tank");
 
+			this.tanksName[0] = this.tanksObjs[0].transform.GetChild(0).GetChild(0).GetComponent<Text>();
+			this.tanksName[1] = this.tanksObjs[1].transform.GetChild(0).GetChild(0).GetComponent<Text>();
+
+			var names = this.gameManager.PlyrsName;
+			this.tanksName[0].text = names[0];
+			this.tanksName[1].text = names[1];
+
 			this.tanksMov[0] = this.tanksObjs[0].GetComponent<Complete.TankMovement>();
 			this.tanksMov[1] = this.tanksObjs[1].GetComponent<Complete.TankMovement>();
 
@@ -55,9 +64,6 @@ public class GameCtrl: MonoBehaviour {
 
 			this.min = Complete.TankShooting.m_MinLaunchForce;
 			this.max = Complete.TankShooting.m_MaxLaunchForce;
-
-			this.tanksObjs[0].transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Circle";
-			this.tanksObjs[1].transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Find";
 		}
 
 		double p1X = this.tanksObjs[0].transform.position.x,
@@ -82,10 +88,11 @@ public class GameCtrl: MonoBehaviour {
 		string[] actions = ((string) p[0]).Split('-');
 
 		for (int i = 0; i < actions.Length; i++)
-			this.tankActions[actions[i]](plyr, (float) (double) ((List<object>) p[1])[i]);
+			this.tankActions[actions[i]](plyr, ((List<object>) p[1])[i]);
 	}
 
-	private void SetMovementInputValue(int plyr, float v) {
+	private void SetMovementInputValue(int plyr, object o) {
+		var v = (float) (double) o;
 		v /= 100;
 		if (v > 1)
 			v = 1;
@@ -95,7 +102,8 @@ public class GameCtrl: MonoBehaviour {
 		this.tanksMov[plyr].M_MovementInputValue = v;
 	}
 
-	private void SetTurnInputValue(int plyr, float v) {
+	private void SetTurnInputValue(int plyr, object o) {
+		var v = (float) (double) o;
 		v /= 100;
 		if (v > 1)
 			v = 1;
@@ -105,12 +113,13 @@ public class GameCtrl: MonoBehaviour {
 		this.tanksMov[plyr].M_TurnInputValue = v;
 	}
 
-	private void LookToEnemy(int plyr, float v) {
+	private void LookToEnemy(int plyr, object o) {
 		int enemy = plyr == 0 ? 1 : 0;
 		this.tanksMov[plyr].transform.LookAt(this.tanksMov[enemy].transform);
 	}
 
-	private void Fire(int plyr, float f) {
+	private void Fire(int plyr, object o) {
+		var f = (float) (double) o;
 		f /= 1000;
 		if (f > 0.1)
 			f = 0.1f;
