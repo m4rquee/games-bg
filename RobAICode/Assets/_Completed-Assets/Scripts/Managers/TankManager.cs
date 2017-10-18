@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Complete {
 	[Serializable]
@@ -17,16 +18,17 @@ namespace Complete {
 		[HideInInspector] public int m_Wins;                    // The number of wins this player has so far.
 
 
-		private TankMovement m_Movement;                        // Reference to tank's movement script, used to disable and enable control.
-		private TankShooting m_Shooting;                        // Reference to tank's shooting script, used to disable and enable control.
-		private GameObject m_CanvasGameObject;                  // Used to disable the world space UI during the Starting and Ending phases of each round.
-
+		[HideInInspector] public TankMovement m_Movement;       // Reference to tank's movement script, used to disable and enable control.
+		[HideInInspector] public TankShooting m_Shooting;       // Reference to tank's shooting script, used to disable and enable control.
+		[HideInInspector] public GameObject m_CanvasGameObject; // Used to disable the world space UI during the Starting and Ending phases of each round.
+		[HideInInspector] public Text m_NameText;
 
 		public void Setup() {
 			// Get references to the components.
 			m_Movement = m_Instance.GetComponent<TankMovement>();
 			m_Shooting = m_Instance.GetComponent<TankShooting>();
 			m_CanvasGameObject = m_Instance.GetComponentInChildren<Canvas>().gameObject;
+			m_NameText = m_Instance.GetComponentInChildren<Text>();
 
 			// Set the player numbers to be consistent across the scripts.
 			m_Movement.m_PlayerNumber = m_PlayerNumber;
@@ -39,12 +41,10 @@ namespace Complete {
 			MeshRenderer[] renderers = m_Instance.GetComponentsInChildren<MeshRenderer>();
 
 			// Go through all the renderers...
-			for (int i = 0; i < renderers.Length; i++) {
+			for (int i = 0; i < renderers.Length; i++)
 				// ... set their material color to the color specific to this tank.
 				renderers[i].material.color = m_PlayerColor;
-			}
 		}
-
 
 		// Used during the phases of the game where the player shouldn't be able to control their tank.
 		public void DisableControl() {
@@ -54,7 +54,6 @@ namespace Complete {
 			m_CanvasGameObject.SetActive(false);
 		}
 
-
 		// Used during the phases of the game where the player should be able to control their tank.
 		public void EnableControl() {
 			m_Movement.enabled = true;
@@ -62,7 +61,6 @@ namespace Complete {
 
 			m_CanvasGameObject.SetActive(true);
 		}
-
 
 		// Used at the start of each round to put the tank into it's default state.
 		public void Reset() {

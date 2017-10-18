@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 namespace Complete {
 	public class GameManager: MonoBehaviour {
+		private PlyrsCtrl plyrsCtrl;
+
 		public int m_NumRoundsToWin = 5;            // The number of rounds a single player has to win to win the game.
 		public float m_StartDelay = 3f;             // The delay between the start of RoundStarting and RoundPlaying phases.
 		public float m_EndDelay = 3f;               // The delay between the end of RoundPlaying and RoundEnding phases.
@@ -28,6 +30,10 @@ namespace Complete {
 			SpawnAllTanks();
 			SetCameraTargets();
 
+			gameObject.AddComponent<PlyrsCtrl>();
+			plyrsCtrl = GetComponent<PlyrsCtrl>();
+			plyrsCtrl.Init(m_Tanks, new string[] { "D:\\PD\\TCC\\Tanks.dll" });
+
 			// Once the tanks have been created and the camera is using them as targets, start the game.
 			StartCoroutine(GameLoop());
 		}
@@ -48,10 +54,9 @@ namespace Complete {
 			Transform[] targets = new Transform[m_Tanks.Length];
 
 			// For each of these transforms...
-			for (int i = 0; i < targets.Length; i++) {
+			for (int i = 0; i < targets.Length; i++)
 				// ... set it to the appropriate tank transform.
 				targets[i] = m_Tanks[i].m_Instance.transform;
-			}
 
 			// These are the targets the camera should follow.
 			m_CameraControl.m_Targets = targets;
@@ -69,14 +74,13 @@ namespace Complete {
 			yield return StartCoroutine(RoundEnding());
 
 			// This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
-			if (m_GameWinner != null) {
+			if (m_GameWinner != null)
 				// If there is a game winner, restart the level.
 				SceneManager.LoadScene(0);
-			} else {
+			else
 				// If there isn't a winner yet, restart this coroutine so the loop continues.
 				// Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.
 				StartCoroutine(GameLoop());
-			}
 		}
 
 		private IEnumerator RoundStarting() {
@@ -103,9 +107,12 @@ namespace Complete {
 			m_MessageText.text = string.Empty;
 
 			// While there is not one tank left...
-			while (!OneTankLeft())
+			while (!OneTankLeft()) {
+				this.plyrsCtrl.DoTurn();
+
 				// ... return on the next frame.
 				yield return null;
+			}
 		}
 
 		private IEnumerator RoundEnding() {

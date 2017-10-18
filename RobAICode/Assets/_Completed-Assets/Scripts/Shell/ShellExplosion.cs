@@ -10,12 +10,10 @@ namespace Complete {
 		public float m_MaxLifeTime = 2f;                    // The time in seconds before the shell is removed.
 		public float m_ExplosionRadius = 5f;                // The maximum distance away from the explosion tanks can be and are still affected.
 
-
 		private void Start() {
 			// If it isn't destroyed by then, destroy the shell after it's lifetime.
 			Destroy(gameObject, m_MaxLifeTime);
 		}
-
 
 		private void OnTriggerEnter(Collider other) {
 			// Collect all the colliders in a sphere from the shell's current position to a radius of the explosion radius.
@@ -63,7 +61,6 @@ namespace Complete {
 			// Destroy the shell.
 			Destroy(gameObject);
 		}
-
 
 		private float CalculateDamage(Vector3 targetPosition) {
 			// Create a vector from the shell to the target.

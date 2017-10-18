@@ -17,23 +17,15 @@ namespace Complete {
 		private ParticleSystem[] m_particleSystems; // References to all the particles systems used by the Tanks
 
 		public float M_MovementInputValue {
-			get {
-				return this.m_MovementInputValue;
-			}
+			get { return this.m_MovementInputValue; }
 
-			set {
-				this.m_MovementInputValue = value;
-			}
+			set { this.m_MovementInputValue = value; }
 		}
 
 		public float M_TurnInputValue {
-			get {
-				return this.m_TurnInputValue;
-			}
+			get { return this.m_TurnInputValue; }
 
-			set {
-				this.m_TurnInputValue = value;
-			}
+			set { this.m_TurnInputValue = value; }
 		}
 
 		private void Awake() {
@@ -62,9 +54,8 @@ namespace Complete {
 			m_Rigidbody.isKinematic = true;
 
 			// Stop all particle system so it "reset" it's position to the actual one instead of thinking we moved when spawning
-			for (int i = 0; i < m_particleSystems.Length; ++i) {
+			for (int i = 0; i < m_particleSystems.Length; ++i)
 				m_particleSystems[i].Stop();
-			}
 		}
 
 		private void Start() {

@@ -7,18 +7,15 @@ namespace Complete {
 		public float m_MinSize = 6.5f;                  // The smallest orthographic size the camera can be.
 		[HideInInspector] public Transform[] m_Targets; // All the targets the camera needs to encompass.
 
-
 		private Camera m_Camera;                        // Used for referencing the camera.
 		private float m_ZoomSpeed;                      // Reference speed for the smooth damping of the orthographic size.
-		private Vector3 m_MoveVelocity;                 // Reference velocity for the smooth damping of the position.
+		private Vector3 m_MoveVelocity;                 // Referenc
 		private Vector3 m_DesiredPosition;              // The position the camera is moving towards.
-
 
 		private void Awake() {
 			m_Camera = GetComponentInChildren<Camera>();
 		}
-
-
+			
 		private void FixedUpdate() {
 			// Move the camera towards a desired position.
 			Move();
@@ -26,8 +23,7 @@ namespace Complete {
 			// Change the size of the camera based.
 			Zoom();
 		}
-
-
+			
 		private void Move() {
 			// Find the average position of the targets.
 			FindAveragePosition();
@@ -35,8 +31,7 @@ namespace Complete {
 			// Smoothly transition to that position.
 			transform.position = Vector3.SmoothDamp(transform.position, m_DesiredPosition, ref m_MoveVelocity, m_DampTime);
 		}
-
-
+			
 		private void FindAveragePosition() {
 			Vector3 averagePos = new Vector3();
 			int numTargets = 0;
@@ -62,14 +57,12 @@ namespace Complete {
 			// The desired position is the average position;
 			m_DesiredPosition = averagePos;
 		}
-
-
+			
 		private void Zoom() {
 			// Find the required size based on the desired position and smoothly transition to that size.
 			float requiredSize = FindRequiredSize();
 			m_Camera.orthographicSize = Mathf.SmoothDamp(m_Camera.orthographicSize, requiredSize, ref m_ZoomSpeed, m_DampTime);
 		}
-
 
 		private float FindRequiredSize() {
 			// Find the position the camera rig is moving towards in its local space.
@@ -105,7 +98,6 @@ namespace Complete {
 
 			return size;
 		}
-
 
 		public void SetStartPositionAndSize() {
 			// Find the desired position.

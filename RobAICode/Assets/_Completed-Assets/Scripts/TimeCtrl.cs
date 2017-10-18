@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 
 public class TimeCtrl: MonoBehaviour {
-
-	public float timeStep = 0.01f;
+	public float timeStep = 0.1f;
 
 	// Update is called once per frame
 	void Update() {
