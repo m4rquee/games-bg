@@ -2,8 +2,8 @@
 using BitsGalaxy;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlyrsCtrl: MonoBehaviour {
 	private GameManager gameManager;
@@ -20,16 +20,17 @@ public class PlyrsCtrl: MonoBehaviour {
 	private float max;
 
 	public void Init(Complete.TankManager[] tanks, string[] paths) {
-		var actions = new Dictionary<string, Action<int, List<object>>>
-			{{ "DoAction", DoAction }};
+		var actions = new Dictionary<string, Action<int, List<object>>> {
+			{ "doaction", DoAction } };
 
 		this.gameManager = new GameManager(paths, actions, 2);
 
 		GetTanksComponents(tanks);
 		SetNames(this.gameManager.PlyrsName);
 
-		this.states = new Dictionary<string, object>[]
-			{ new Dictionary<string, object>(), new Dictionary<string, object>() };
+		this.states = new Dictionary<string, object>[] {
+			new Dictionary<string, object>(),
+			new Dictionary<string, object>() };
 
 		this.tankActions = new Dictionary<string, Action<int, object>>()
 			{ { "move", SetMovementInputValue}, { "turn", SetTurnInputValue},
@@ -118,12 +119,12 @@ public class PlyrsCtrl: MonoBehaviour {
 
 	public void DoTurn() {
 		double p1X = this.tanksTrans[0].position.x,
-		p1Y = this.tanksTrans[0].position.z,
-		p1R = this.tanksTrans[0].rotation.eulerAngles.y;
+			p1Y = this.tanksTrans[0].position.z,
+			p1R = this.tanksTrans[0].rotation.eulerAngles.y;
 
 		double p2X = this.tanksTrans[1].position.x,
-		p2Y = this.tanksTrans[1].position.z,
-		p2R = this.tanksTrans[1].rotation.eulerAngles.y;
+			p2Y = this.tanksTrans[1].position.z,
+			p2R = this.tanksTrans[1].rotation.eulerAngles.y;
 
 		this.states[0]["enemy-pos"] = new ArrayList { p2X, p2Y };
 		this.states[0]["player-info"] = new ArrayList { p1X, p1Y, p1R };
@@ -131,6 +132,10 @@ public class PlyrsCtrl: MonoBehaviour {
 		this.states[1]["enemy-pos"] = new ArrayList { p1X, p1Y };
 		this.states[1]["player-info"] = new ArrayList { p2X, p2Y, p2R };
 
-		this.gameManager.Update(this.states);
+		try {
+			this.gameManager.Update(this.states);
+		} catch (Exception e) {
+			Debug.Log(e.ToString());
+		}
 	}
 }

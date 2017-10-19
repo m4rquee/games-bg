@@ -32,7 +32,9 @@ namespace Complete {
 
 			gameObject.AddComponent<PlyrsCtrl>();
 			plyrsCtrl = GetComponent<PlyrsCtrl>();
-			plyrsCtrl.Init(m_Tanks, new string[] { "D:\\PD\\TCC\\Tanks.dll" });
+			plyrsCtrl.Init(m_Tanks, new string[] {
+				"C:\\Users\\u15182\\Desktop\\Nova\\Circle-Block.dll",
+				"C:\\Users\\u15182\\Desktop\\Nova\\Circle-Block.dll" });
 
 			// Once the tanks have been created and the camera is using them as targets, start the game.
 			StartCoroutine(GameLoop());
