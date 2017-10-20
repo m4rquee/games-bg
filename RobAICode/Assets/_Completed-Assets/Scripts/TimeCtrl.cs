@@ -13,6 +13,6 @@ public class TimeCtrl: MonoBehaviour {
 		if (newValue > 0 && newValue <= 100)
 			Time.timeScale = newValue;
 
-		Debug.Log(Time.timeScale);
+		//Debug.Log(Time.timeScale);
 	}
 }

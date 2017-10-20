@@ -9,7 +9,7 @@ namespace Complete {
 		public AudioSource m_ShootingAudio;         // Reference to the audio source used to play the shooting audio. NB: different to the movement audio source.
 		public AudioClip m_FireClip;                // Audio that plays when each shot is fired.
 		public static float m_MinLaunchForce = 15f; // The force given to the shell if the fire button is not held.
-		public static float m_MaxLaunchForce = 30f; // The force given to the shell if the fire button is held for the max charge time.
+		public static float m_MaxLaunchForce = 60f; // The force given to the shell if the fire button is held for the max charge time.
 
 		public float waitTime = 1;
 		public bool shooting = false;
@@ -23,8 +23,7 @@ namespace Complete {
 			yield return new WaitForSeconds(this.waitTime);
 
 			// Create an instance of the shell and store a reference to it's rigidbody.
-			Rigidbody shellInstance =
-				Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
+			Rigidbody shellInstance = Instantiate(m_Shell, m_FireTransform.position, m_FireTransform.rotation) as Rigidbody;
 
 			// Set the shell's velocity to the launch force in the fire position's forward direction.
 			shellInstance.velocity = speed * m_FireTransform.forward;

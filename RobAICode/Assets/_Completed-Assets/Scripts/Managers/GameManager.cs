@@ -14,6 +14,7 @@ namespace Complete {
 		public Text m_MessageText;                  // Reference to the overlay Text to display winning text, etc.
 		public GameObject m_TankPrefab;             // Reference to the prefab the players will control.
 		public TankManager[] m_Tanks;               // A collection of managers for enabling and disabling different aspects of the tanks.
+		public float maxSpawnRadius = 10f;
 
 
 		private int m_RoundNumber;                  // Which round the game is currently on.
@@ -30,11 +31,8 @@ namespace Complete {
 			SpawnAllTanks();
 			SetCameraTargets();
 
-			gameObject.AddComponent<PlyrsCtrl>();
 			plyrsCtrl = GetComponent<PlyrsCtrl>();
-			plyrsCtrl.Init(m_Tanks, new string[] {
-				"C:\\Users\\u15182\\Desktop\\Nova\\Circle-Block.dll",
-				"C:\\Users\\u15182\\Desktop\\Nova\\Circle-Block.dll" });
+			plyrsCtrl.Init(m_Tanks, new string[] { "F:\\PD\\TCC\\Tanks.dll" });
 
 			// Once the tanks have been created and the camera is using them as targets, start the game.
 			StartCoroutine(GameLoop());
@@ -43,9 +41,20 @@ namespace Complete {
 		private void SpawnAllTanks() {
 			// For all the tanks...
 			for (int i = 0; i < m_Tanks.Length; i++) {
+				float radius = Random.Range(0, this.maxSpawnRadius),
+					angle = Random.Range(0, 2 * Mathf.PI);
+
+				float xOffset = radius * Mathf.Cos(angle),
+					zOffset = radius * Mathf.Sin(angle);
+
+				var offset = new Vector3(xOffset, 0, zOffset);
+
+				m_Tanks[i].m_SpawnPoint.transform.position += offset;
+
 				// ... create them, set their player number and references needed for control.
-				m_Tanks[i].m_Instance =
-					Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.position, m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+				m_Tanks[i].m_Instance = Instantiate(m_TankPrefab, m_Tanks[i].m_SpawnPoint.transform.position,
+					m_Tanks[i].m_SpawnPoint.rotation) as GameObject;
+
 				m_Tanks[i].m_PlayerNumber = i + 1;
 				m_Tanks[i].Setup();
 			}

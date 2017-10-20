@@ -74,7 +74,7 @@ public class PlyrsCtrl: MonoBehaviour {
 		string[] actions = ((string) p[0]).Split('-');
 
 		for (int i = 0; i < actions.Length; i++)
-			this.tankActions[actions[i]](plyr, ((List<object>) p[1])[i]);
+			this.tankActions[actions[i]](plyr, ((ArrayList) p[1])[i]);
 	}
 
 	private void SetMovementInputValue(int plyr, object o) {
