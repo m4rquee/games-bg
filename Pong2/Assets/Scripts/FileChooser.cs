@@ -2,7 +2,6 @@
 
 public class FileChooser: MonoBehaviour {
 
-	public int pathNum;
 	public GameObject menu;
 	public InitGame initGame;
 
@@ -11,7 +10,7 @@ public class FileChooser: MonoBehaviour {
 	public void OpenFile() {
 		if (!windowOpen) {
 			this.menu.SetActive(false);
-			FileSelector.GetFile("D:\\", GotFile, ".dll");
+			FileSelector.GetFile(GotFile, ".dll");
 			windowOpen = true;
 		}
 	}

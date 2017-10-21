@@ -691,6 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4b6db51c526bf84b82b337c3ad5b7fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menu: {fileID: 136256923}
   initGame: {fileID: 887585912}
 --- !u!1 &710927089
 GameObject:
@@ -908,7 +909,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10127b162403edb4484b32d88f8550fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: 
   gamesObjs: {fileID: 1523095268}
   btns: {fileID: 136256923}
 --- !u!1 &1185669079
