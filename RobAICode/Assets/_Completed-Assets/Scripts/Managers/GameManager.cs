@@ -24,7 +24,7 @@ namespace Complete {
 		private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
 		private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
-		public static List<string> paths = new List<string>();
+		public static List<string> paths = new List<string>() { null, null };
 
 		private void Start() {
 			// Create the delays so they only have to be made once.
