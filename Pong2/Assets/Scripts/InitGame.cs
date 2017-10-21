@@ -2,14 +2,14 @@
 
 public class InitGame: MonoBehaviour {
 
-	public string path = null;
+	public static string path = null;
 	public GameObject gamesObjs;
 	public GameObject btns;
 
 	public void Init() {
-		if (!string.IsNullOrEmpty(this.path)) {
+		if (!string.IsNullOrEmpty(path)) {
 			Controller ctrl = this.gamesObjs.GetComponentInChildren<Controller>();
-			ctrl.Init(this.path);
+			ctrl.Init(path);
 
 			this.gamesObjs.SetActive(true);
 			this.btns.SetActive(false);
