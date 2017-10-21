@@ -2,9 +2,10 @@
 
 public class InitGame: MonoBehaviour {
 
-	public static string[] paths = new string[] { null, null };
+	public GameObject menu;
 	public GameObject gamesObjs;
-	public GameObject btns;
+
+	public static string[] paths = new string[] { null, null };
 
 	public void Init() {
 		if (!string.IsNullOrEmpty(paths[0]) && !string.IsNullOrEmpty(paths[1])) {
@@ -12,7 +13,7 @@ public class InitGame: MonoBehaviour {
 			ctrl.Init(paths[0], paths[1]);
 
 			this.gamesObjs.SetActive(true);
-			this.btns.SetActive(false);
+			this.menu.SetActive(false);
 		}
 	}
 }
