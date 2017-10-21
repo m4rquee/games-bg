@@ -1,7 +1,8 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 namespace Complete {
 	public class GameManager: MonoBehaviour {
@@ -23,6 +24,8 @@ namespace Complete {
 		private TankManager m_RoundWinner;          // Reference to the winner of the current round.  Used to make an announcement of who won.
 		private TankManager m_GameWinner;           // Reference to the winner of the game.  Used to make an announcement of who won.
 
+		public static List<string> paths = new List<string>();
+
 		private void Start() {
 			// Create the delays so they only have to be made once.
 			m_StartWait = new WaitForSeconds(m_StartDelay);
@@ -32,7 +35,7 @@ namespace Complete {
 			SetCameraTargets();
 
 			plyrsCtrl = GetComponent<PlyrsCtrl>();
-			plyrsCtrl.Init(m_Tanks, new string[] { "F:\\PD\\TCC\\Tanks.dll" });
+			plyrsCtrl.Init(m_Tanks, paths.ToArray());
 
 			// Once the tanks have been created and the camera is using them as targets, start the game.
 			StartCoroutine(GameLoop());

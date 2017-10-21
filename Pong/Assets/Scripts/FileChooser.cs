@@ -11,7 +11,7 @@ public class FileChooser: MonoBehaviour {
 	public void OpenFile() {
 		if (!windowOpen) {
 			this.menu.SetActive(false);
-			FileSelector.GetFile("D:\\", GotFile, ".dll");
+			FileSelector.GetFile(GotFile, ".dll");
 			windowOpen = true;
 		}
 	}
