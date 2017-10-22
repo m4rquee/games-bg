@@ -35,7 +35,13 @@ namespace Complete {
 			SetCameraTargets();
 
 			plyrsCtrl = GetComponent<PlyrsCtrl>();
-			plyrsCtrl.Init(m_Tanks, paths.ToArray());
+
+			var validPaths = new List<string>();
+			foreach (var path in paths)
+				if (!string.IsNullOrEmpty(path))
+					validPaths.Add(path);
+
+			plyrsCtrl.Init(m_Tanks, validPaths.ToArray());
 
 			// Once the tanks have been created and the camera is using them as targets, start the game.
 			StartCoroutine(GameLoop());
@@ -90,7 +96,7 @@ namespace Complete {
 			// This code is not run until 'RoundEnding' has finished.  At which point, check if a game winner has been found.
 			if (m_GameWinner != null)
 				// If there is a game winner, restart the level.
-				SceneManager.LoadScene(0);
+				SceneManager.LoadScene(1);
 			else
 				// If there isn't a winner yet, restart this coroutine so the loop continues.
 				// Note that this coroutine doesn't yield.  This means that the current version of the GameLoop will end.

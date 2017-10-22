@@ -4,7 +4,6 @@ public class FileChooser: MonoBehaviour {
 
 	public int pathNum;
 	public GameObject menu;
-	public InitGame initGame;
 
 	private static bool windowOpen;
 

@@ -1,12 +1,10 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Complete;
+using UnityEngine;
 
 public class FileButton: MonoBehaviour {
 
 	public int pathNum;
 	public GameObject menu;
-	public InitGame initGame;
 
 	private static bool windowOpen;
 

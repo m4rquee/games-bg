@@ -5,7 +5,7 @@ public class TimeCtrl: MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-		var input = Input.GetAxis("Vertical2");
+		var input = Input.GetAxis("Mouse ScrollWheel");
 
 		var mult = input == 0 ? 0 : Mathf.Sign(input);
 		var newValue = Time.timeScale + this.timeStep * mult;
